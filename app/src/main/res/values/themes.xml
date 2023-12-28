@@ -1,4 +1,4 @@
 <resources>
 
-    <style name="Theme.JPCLeaderboard" parent="@style/Theme.Leanback" />
+    <style name="Theme.AppTheme" parent="@style/Theme.Leanback" />
 </resources>
