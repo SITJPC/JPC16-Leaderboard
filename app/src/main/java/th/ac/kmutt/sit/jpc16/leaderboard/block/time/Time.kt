@@ -1,10 +1,8 @@
 package th.ac.kmutt.sit.jpc16.leaderboard.block.time
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -15,17 +13,19 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
+import th.ac.kmutt.sit.jpc16.leaderboard.ui.theme.Theme
 import java.util.Timer
 import java.util.TimerTask
 
 @Composable
 fun Time() {
-    var currentDate by remember { mutableStateOf(getDate()) }
+    var currentTime by remember { mutableStateOf(getDate()) }
     val coroutineScope = rememberCoroutineScope()
 
     DisposableEffect(Unit) {
@@ -34,7 +34,7 @@ fun Time() {
         val task = object : TimerTask() {
             override fun run() {
                 coroutineScope.launch {
-                    currentDate = getDate()
+                    currentTime = getDate()
                 }
             }
         }
@@ -50,19 +50,33 @@ fun Time() {
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    // Compose
+    Row(
+        verticalAlignment = Alignment.Bottom,
+        horizontalArrangement = Arrangement.Center
     ) {
-        Text(text = currentDate, style = MaterialTheme.typography.bodyLarge)
+        Text(
+            text = currentTime.first,
+            style = TextStyle(
+                fontFamily = FontFamily.Default,
+                fontSize = 24.sp
+            )
+        )
+        Text(
+            modifier = Modifier.padding(start = 2.dp, bottom = 2.dp),
+            text = currentTime.second,
+            style = TextStyle(
+                fontFamily = FontFamily.Default,
+                fontSize = 16.sp
+            )
+        )
     }
 }
 
-fun getDate(): String {
-    val currentDate = Calendar.getInstance().time
-    val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
-    return dateFormat.format(currentDate)
+@Composable
+@Preview(showBackground = true, widthDp = 240, heightDp = 120)
+fun Preview() {
+    Theme {
+        Time()
+    }
 }
