@@ -25,11 +25,11 @@
             android:theme="@style/Theme.AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.service.notification.NotificationListenerService" />
 
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".LeaderboardActivity" />
 
         <service

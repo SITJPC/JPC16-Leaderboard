@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import th.ac.kmutt.sit.jpc16.leaderboard.leaderboard.playing.Playing
+import th.ac.kmutt.sit.jpc16.leaderboard.leaderboard.playing.PlayingUi
+import th.ac.kmutt.sit.jpc16.leaderboard.leaderboard.playing.PlayingUiPreview
 import th.ac.kmutt.sit.jpc16.leaderboard.leaderboard.time.Time
 import th.ac.kmutt.sit.jpc16.leaderboard.ui.theme.Theme
 
@@ -24,7 +26,7 @@ fun LeaderboardPreview() {
 			modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
 		) {
 			Time()
-			Playing()
+			PlayingUiPreview()
 		}
 	}
 }

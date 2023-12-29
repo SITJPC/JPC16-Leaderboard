@@ -10,5 +10,4 @@ class NotificationReceiver: NotificationListenerService() {
 	override fun onNotificationPosted(sbn: StatusBarNotification?) {
 		Log.d("NotificationReceiver", "onNotificationPosted")
 	}
-
 }

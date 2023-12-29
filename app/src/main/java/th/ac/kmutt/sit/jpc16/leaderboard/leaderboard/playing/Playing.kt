@@ -1,32 +1,46 @@
 package th.ac.kmutt.sit.jpc16.leaderboard.leaderboard.playing
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat.getSystemService
 import android.content.ComponentName
 import android.media.session.MediaSessionManager
-import android.util.Log
 import th.ac.kmutt.sit.jpc16.leaderboard.service.NotificationReceiver
 
 @Composable
 fun Playing() {
+	// Local context
 	val context = LocalContext.current
-	LaunchedEffect(Unit) {
-		val m = getSystemService(context, MediaSessionManager::class.java)
+
+	// State
+	val track = remember { mutableStateOf<Track?>(null) }
+
+	// Media session effect
+	DisposableEffect(Unit) {
+		// Construct media session manager
+		val mediaSessionManager = getSystemService(context, MediaSessionManager::class.java)
 		val component = ComponentName(context, NotificationReceiver::class.java)
-		val sessions = m?.getActiveSessions(component)
-		Log.d("Sessions", "count: ${sessions?.size}")
-		sessions?.forEach {
-			Log.d("Sessions", "$it -- " + (it?.metadata?.keySet()?.joinToString()))
-			it?.metadata?.keySet()?.forEach { ita ->
-				Log.d("Sessions", "$ita: ${ita?.let { it1 -> it.metadata?.getString(it1) }}")
-			}
+		val activeSessionCallback = ActiveSessionCallback(track)
+
+		// Register active sessions
+		val activeSessions = mediaSessionManager?.getActiveSessions(component)
+		activeSessionCallback.register(activeSessions)
+
+		// Add active sessions changed listener
+		mediaSessionManager?.addOnActiveSessionsChangedListener(activeSessionCallback, component)
+
+		onDispose {
+			// Remove active sessions changed listener
+			mediaSessionManager?.removeOnActiveSessionsChangedListener(activeSessionCallback)
+
+			// Unregister active sessions
+			val remainingActiveSessions = mediaSessionManager?.getActiveSessions(component)
+			activeSessionCallback.unregister(remainingActiveSessions)
 		}
 	}
 
-	Text(
-		text = "Playing"
-	)
+	PlayingUi(track = track.component1())
 }
