@@ -1,4 +1,8 @@
 <resources>
-
     <style name="Theme.AppTheme" parent="@style/Theme.Leanback" />
+    <style name="Theme.AppTheme.Splash" parent="@style/Theme.Leanback">
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/banner</item>
+        <item name="android:windowSplashScreenAnimationDuration">1000</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/fastlane_background</item>
+    </style>
 </resources>

@@ -1,4 +1,4 @@
-package th.ac.kmutt.sit.jpc16.leaderboard.block.time
+package th.ac.kmutt.sit.jpc16.leaderboard.leaderboard.time
 
 import java.text.SimpleDateFormat
 import java.util.Calendar

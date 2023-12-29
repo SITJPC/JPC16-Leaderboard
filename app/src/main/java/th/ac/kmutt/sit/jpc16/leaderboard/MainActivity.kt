@@ -1,55 +1,47 @@
 package th.ac.kmutt.sit.jpc16.leaderboard
 
-import android.os.Bundle
+import java.util.concurrent.locks.ReentrantLock
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.annotation.Size
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import th.ac.kmutt.sit.jpc16.leaderboard.block.time.Time
-import th.ac.kmutt.sit.jpc16.leaderboard.ui.theme.Theme
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import android.animation.ObjectAnimator
+import android.content.Intent
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
+import android.view.animation.AnticipateInterpolator
+import th.ac.kmutt.sit.jpc16.leaderboard.func.buildNotificationServiceAlertDialog
+import th.ac.kmutt.sit.jpc16.leaderboard.func.isNotificationServiceEnabled
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                    Time()
-                }
-            }
-        }
-    }
-}
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.main_activity)
+		installSplashScreen()
+	}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+	override fun onResume() {
+		super.onResume()
 
-@Composable
-@Preview(showBackground = true, widthDp = 960, heightDp = 540)
-fun GreetingPreview() {
-    Theme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            Greeting("Android")
-            Time()
-        }
-    }
+		// New conditional startup thread
+		Thread {
+			// Check for notification access
+			val lock = ReentrantLock()
+			if (!isNotificationServiceEnabled(this)) {
+				lock.lock()
+				Handler(Looper.getMainLooper()).post {
+					buildNotificationServiceAlertDialog(this).show()
+				}
+			}
+
+			// Check unlocked all conditional startup and start leaderboard activity
+			if (!lock.isLocked) {
+				Intent(this, LeaderboardActivity::class.java).also {
+					startActivity(it)
+				}
+				finish()
+			}
+		}.start()
+	}
 }
