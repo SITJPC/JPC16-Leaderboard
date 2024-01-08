@@ -27,7 +27,7 @@ fun BackgroundPreview() {
 private val webViewClient = object : WebViewClient() {
 	override fun onPageFinished(view: WebView?, url: String?) {
 		if (BuildConfig.DEBUG) {
-			view?.loadUrl("javascript:initBubble(false)")
+			view?.loadUrl("javascript:initBubble(true)")
 		} else {
 			view?.loadUrl("javascript:initBubble(true)")
 		}
