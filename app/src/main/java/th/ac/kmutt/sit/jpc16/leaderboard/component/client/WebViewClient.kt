@@ -1,7 +1,10 @@
 package th.ac.kmutt.sit.jpc16.leaderboard.component.client
 
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import android.view.View
 import android.webkit.WebView
@@ -18,9 +21,7 @@ fun WebView(
 		factory = { context ->
 			WebView(context).apply {
 				settings.javaScriptEnabled = true
-				settings.loadWithOverviewMode = true
-				settings.useWideViewPort = true
-				settings.setSupportZoom(false)
+				settings.useWideViewPort = false
 				this.webViewClient = webViewClient
 			}
 		},
