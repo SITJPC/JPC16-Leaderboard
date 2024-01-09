@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import th.ac.kmutt.sit.jpc16.leaderboard.ui.constant.blockBackgroundColor
+import th.ac.kmutt.sit.jpc16.leaderboard.ui.constant.blockBackgroundColorT2
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -33,9 +34,8 @@ fun PlayingUi(track: Track?) {
     } else {
         Row(
             modifier = Modifier
-                .padding(horizontal = 12.dp, vertical = 8.dp)
                 .background(
-                    color = blockBackgroundColor, shape = MaterialTheme.shapes.medium
+                    color = blockBackgroundColorT2, shape = MaterialTheme.shapes.medium
                 ),
             Arrangement.Start,
             Alignment.CenterVertically
