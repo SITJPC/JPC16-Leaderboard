@@ -63,8 +63,6 @@ dependencies {
 	implementation("androidx.compose.ui:ui-tooling-preview")
 	implementation("androidx.compose.material3:material3")
 	implementation("io.coil-kt:coil-compose:2.5.0")
-	implementation("com.github.jakhongirmadaminov:glassmorphic-composables:0.0.7")
-	implementation("io.github.kevinnzou:compose-webview:0.33.3")
 	androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
 	androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 	debugImplementation("androidx.compose.ui:ui-tooling")

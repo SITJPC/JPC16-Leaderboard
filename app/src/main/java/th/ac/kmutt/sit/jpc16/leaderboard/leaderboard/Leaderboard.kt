@@ -35,18 +35,6 @@ fun LeaderboardPreview() {
 		) {
 			Time()
 			PlayingUiPreview()
-			Surface(
-				modifier = Modifier.visualEffectBehind(
-					// FIXME: Cannot share a state
-//        state = visualEffectState,
-					effect = VisualEffect.BlurRenderScript(context, 12f),
-					updatePolicy = UpdatePolicy.RealTime,
-					downscale = 16f,
-					baseColor = Color.Black,
-				)
-			) {
-				Leaderboard()
-			}
 		}
 	}
 }
